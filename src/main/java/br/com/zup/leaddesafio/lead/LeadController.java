@@ -17,7 +17,7 @@ public class LeadController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void cadastrarCliente(@RequestBody LeadDTO leadDTO) {
-        leadService.adicionarCliente(leadDTO);
+        leadService.salvarCliente(leadDTO);
     }
 
     @GetMapping

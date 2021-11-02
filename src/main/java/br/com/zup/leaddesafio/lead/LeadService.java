@@ -13,28 +13,36 @@ import java.util.List;
 public class LeadService {
     List<LeadDTO> clientes = new ArrayList<>();
 
-    public void adicionarCliente(LeadDTO leadDTO) {
-        if (validarEmail(leadDTO)) {
+    public void salvarCliente(LeadDTO leadDTO) {
+        if (validarLead(leadDTO)) {
             clientes.add(leadDTO);
         }
     }
 
-    public String validarCadastro(LeadDTO leadDTO) {
+    public String validarProduto(LeadDTO leadDTO) {
         String nomeDoProduto = "";
+
         for (LeadDTO referenciaCliente : clientes) {
-            for (ProdutoDTO referenciaProduto : referenciaCliente.getProdutos()) {
-                nomeDoProduto = referenciaProduto.getNomeDoProduto();
-                return nomeDoProduto;
+            if (referenciaCliente.getProdutos().isEmpty()) {
+                for (ProdutoDTO referenciaProduto : referenciaCliente.getProdutos()) {
+                    nomeDoProduto = referenciaProduto.getNomeDoProduto();
+                }
+            } else {
+                for (ProdutoDTO verificaProduto : referenciaCliente.getProdutos()) {
+                    if (!verificaProduto.getNomeDoProduto().contains(nomeDoProduto)) {
+                        nomeDoProduto = verificaProduto.getNomeDoProduto();
+                    }
+                }
             }
         }
         return nomeDoProduto;
     }
 
-    public boolean validarEmail(LeadDTO leadDTO) {
+    public boolean validarLead(LeadDTO leadDTO) {
         boolean validar = true;
 
         String novoEmail = leadDTO.getEmail();
-        String nomeProduto = validarCadastro(leadDTO);
+        String nomeProduto = validarProduto(leadDTO);
 
         if (!clientes.isEmpty()) {
             for (LeadDTO referencia : clientes) {
@@ -50,7 +58,6 @@ public class LeadService {
         }
         return validar;
     }
-
 
     public List<LeadDTO> exibirClientesCadastrados() {
         return clientes;

@@ -10,7 +10,7 @@ public class ProdutoDTO {
     public ProdutoDTO(String nomeDoProduto, double valor) {
         this.nomeDoProduto = nomeDoProduto;
         this.valor = valor;
-    }
+     }
 
     public String getNomeDoProduto() {
         return nomeDoProduto;
